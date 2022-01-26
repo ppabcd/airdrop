@@ -138,6 +138,20 @@ async function getWallets(){
         })
 }
 function setWallets(){
+    let selectWallet = qs('#form-airdrop-wallet')    
+    removeOption(selectWallet)
+    let optionWallet = document.createElement('option')
+    optionWallet.value = ''
+    optionWallet.text = 'Wallet'
+    selectWallet.add(optionWallet)
+    for(let i = 0; i < wallets.length; i++){
+        let walletAddress = wallets[i].address.substring(0, 7) + '...' + wallets[i].address.slice(wallets[i].address.length - 5)
+        let option = document.createElement('option')
+        option.value = wallets[i].shortName + '|' + wallets[i].network + '|' + wallets[i].address
+        option.innerHTML = wallets[i].name + ' (' + wallets[i].network + ') | ' + walletAddress
+        selectWallet.appendChild(option)
+    }
+
     let walletTable = qs('#wallets-data')
     walletTable.innerHTML = ''
     if(wallets.length < 1){

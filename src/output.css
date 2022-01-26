@@ -1557,6 +1557,10 @@ select {
     margin-top: 1.5rem;
   }
 
+  .sm\:mt-2 {
+    margin-top: 0.5rem;
+  }
+
   .sm\:block {
     display: block;
   }

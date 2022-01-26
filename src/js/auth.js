@@ -76,6 +76,7 @@ function checkAccount(){
     toggleModal('modalLogin', 'close')
     getNetworks()
     getWallets()
+    getAirdrop()
     changeMenu('airdrop')
 }
 checkAccount()

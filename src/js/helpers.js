@@ -46,3 +46,18 @@ function removeOption(selectElement){
         selectElement.remove(i);
     }
 }
+function inArray(
+    needle,
+    haystack
+){
+    const length = haystack.length
+    for (let i = 0; i < length; i++) {
+        if (haystack[i] === needle) return true
+    }
+    return false
+}
+function isEmptyObject(obj){
+    return obj
+        && Object.keys(obj).length === 0
+        && Object.getPrototypeOf(obj) === Object.prototype
+}

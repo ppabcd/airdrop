@@ -14,3 +14,7 @@ function changeMenu(type){
             break;
     }
 }
+
+qs(".add-airdrop").addEventListener('click', function(){
+    toggleModal('modalAirdrop', 'open')
+})

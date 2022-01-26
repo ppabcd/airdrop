@@ -1,0 +1,15 @@
+{
+    "devDependencies": {
+      "tailwindcss": "^3.0.12"
+    },
+    "dependencies": {
+      "@tailwindcss/forms": "^0.4.0"
+    },
+    "scripts": {
+      "build": "npx tailwindcss -i src/input.css -o src/output.css --minify",
+      "watch": "npx tailwindcss -i src/input.css -o src/output.css --watch",
+      "deploy": "npx tailwindcss -i src/input.css -o src/output.css --minify && firebase deploy",
+      "http": "http-server src"
+    }
+  }
+  

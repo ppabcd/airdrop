@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+.hidden-important{
+    display: none !important;
+}
+
+.menu{
+    @apply inline-flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-offset-2 focus:ring-0
+}
+.menu.active{
+    @apply bg-indigo-500 text-white
+}

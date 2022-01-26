@@ -42,6 +42,7 @@ Setelah melakukan submit, maka data tersebut akan disimpan didalam cache. Ketika
 - [ ] Integration Social Media API
 - [ ] Database Connection with Auth
 - [ ] Generate Wallet
+- [ ] Subscribe Airdrop Channel
 
 ## Kontribusi
 Kamu dapat melakukan kontribusi pada project ini dengan cara melakukan fork. Setelah melakukan fork pada project ini, kamu dapat mengubah beberapa hal yang mungkin belum tersedia 

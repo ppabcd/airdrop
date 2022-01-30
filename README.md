@@ -44,6 +44,7 @@ Setelah melakukan submit, maka data tersebut akan disimpan didalam cache. Ketika
 - [ ] Generate Wallet
 - [ ] Subscribe Airdrop Channel
 - [ ] Tweet template
+- [ ] Cache data to prevent frequently request db
 
 ## Kontribusi
 Kamu dapat melakukan kontribusi pada project ini dengan cara melakukan fork. Setelah melakukan fork pada project ini, kamu dapat mengubah beberapa hal yang mungkin belum tersedia 

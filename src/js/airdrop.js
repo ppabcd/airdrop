@@ -265,6 +265,7 @@ async function showAirdrop(id, type){
     qs("#deleteAirdropButton").classList.remove('hidden')
     qs("#edit-airdrop-button").classList.remove('hidden')
     qs("#submit-airdrop-button").classList.add('hidden')
+    qs("#addMoreInformationButton").classList.add('hidden')
     airdropTemp = `${type}/${id}`
 
     if(!isEmptyObject(airdropData.data.addOn)){
@@ -290,6 +291,7 @@ async function editAirdrop(){
     }
     qs("#edit-airdrop-button").classList.add('hidden')
     qs("#submit-airdrop-button").classList.remove('hidden')
+    qs("#addMoreInformationButton").classList.remove('hidden')
 }
 async function deleteAirdrop(){
     let id = airdropTemp

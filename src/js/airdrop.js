@@ -22,17 +22,17 @@ function resetAirdropModal(){
 function addOnElement(){
     return `
     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5 addOnSection">
-        <input type="text" autocomplete="given-name" class="addOnInformation max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" placeholder="Key">
+        <input type="text" autocomplete="given-name" class="addOnInformation max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" placeholder="Key" value="{{KEY_VALUE}}">
         <div class="mt-1 sm:mt-0 sm:col-span-2">
             <!-- Wallet selection -->
-            <input type="text" autocomplete="given-name" class="valueAddOnInformation max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" placeholder="Value">
+            <input type="text" autocomplete="given-name" class="valueAddOnInformation max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" placeholder="Value" value="{{VALUE_DATA}}">
         </div>
     </div>    
 `
 }
 function addMoreInformation(){
     let formfield = qs("#form-airdrop-field")
-    formfield.insertAdjacentHTML('beforeend', addOnElement())
+    formfield.insertAdjacentHTML('beforeend', addOnElement().replace('{{KEY_VALUE}}', '').replace('{{VALUE_DATA}}', ''))
 }
 function clearAirdropModal(){
     resetAirdropModal()
@@ -70,7 +70,9 @@ function addAirdrop(){
     if(addOnKey.length > 0 && valueOnKey.length > 0){
         data.addOn = {}
         for(let i = 0; i < addOnKey.length; i++){
-            data.addOn[addOnKey[i].value] = valueOnKey[i].value
+            if(addOnKey[i].value != '' && valueOnKey[i].value != ''){
+                data.addOn[addOnKey[i].value] = valueOnKey[i].value
+            }
         }
     }
     if(airdropTemp != null){
@@ -234,6 +236,15 @@ async function showAirdrop(id, type){
     qs("#form-airdrop-post").value = airdropData.data.post
     qs("#deleteAirdropButton").classList.remove('hidden')
     airdropTemp = `${type}/${id}`
+
+    if(!isEmptyObject(airdropData.data.addOn)){
+        let formfield = qs("#form-airdrop-field")
+        for(let i in airdropData.data.addOn){
+            formfield.insertAdjacentHTML('beforeend', addOnElement().replace('{{KEY_VALUE}}', i).replace('{{VALUE_DATA}}', airdropData.data.addOn[i]))
+            console.log("asdasda")
+        }
+    }
+    
     toggleModal('modalAirdrop', 'open')
 }
 async function deleteAirdrop(){

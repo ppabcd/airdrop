@@ -44,6 +44,8 @@ function addAirdrop(){
     let type = qs('#form-airdrop-type')
     let wallet = qs('#form-airdrop-wallet')
     let post = qs('#form-airdrop-post')
+    let addOnKey = qsa(".addOnInformation")
+    let valueOnKey = qsa(".valueAddOnInformation")
     let uniqueTime = randomNumber(0,59);
     let time = new Date().getTime()/1000
     let walletData = wallet.value.split('|')
@@ -65,15 +67,24 @@ function addAirdrop(){
         walletPlain: wallet.value,
         post: post.value
     }
+    if(addOnKey.length > 0 && valueOnKey.length > 0){
+        data.addOn = {}
+        for(let i = 0; i < addOnKey.length; i++){
+            data.addOn[addOnKey[i].value] = valueOnKey[i].value
+        }
+    }
+    if(airdropTemp != null){
+        axios.delete(url+`airdrop/${airdropTemp}.json`) // Delete old airdrop
+    }
     axios.put(url+'airdrop/' + type.value +'/'+ id + '.json', data)
-    .then(function(response){
-        alert('Airdrop added')
-        clearAirdropModal()
-        getAirdrop()
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+        .then(function(response){
+            alert('Airdrop added')
+            clearAirdropModal()
+            getAirdrop()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 function getAirdrop(){
     axios.get(url+'airdrop.json')

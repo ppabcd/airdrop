@@ -31,12 +31,14 @@ function addAirdrop(){
         return
     }
     let data = {
+        id: parseInt(time) + uniqueTime,
         name: name.value,
         description: description.value,
         type: type.value,
         walletName: walletData[0],
         network: walletData[1],
         address: walletData[2],
+        walletPlain: wallet.value,
         post: post.value
     }
     axios.put(url+'airdrop/' + type.value +'/'+ parseInt(time) + uniqueTime+'.json', data)
@@ -53,6 +55,10 @@ function getAirdrop(){
     axios.get(url+'airdrop.json')
     .then(function(response){
         let data = response.data
+        if(!data){
+            setAirdrop()
+            return
+        }
         airdrop = response.data
         setAirdrop()
     }).catch((err) =>{
@@ -61,14 +67,15 @@ function getAirdrop(){
 }
 function getType(type){
     let allowedType = ['doing', 'ongoing', 'completed']
+    console.log(airdrop[type])
     if(!inArray(type, allowedType)){
-        return false
+        return []
     }
     return airdrop[type] || []
 }
 function airdropTag(){
     return `
-<div class="border-gray-100 border px-5 py-3 rounded-md cursor-pointer mb-5 shadow-sm">
+<div class="border-gray-100 border px-5 py-3 rounded-md cursor-pointer mb-5 shadow-sm" onclick="{{JS_ACTION}}">
     <div id="info" class="flex space-x-2 flex-row mb-3">
         <div id="network" class="text-xs bg-yellow-100 font-bold text-yellow-500 px-3 py-1 rounded-full">
             {{NETWORK_SHORT}}
@@ -140,6 +147,7 @@ function setAirdrop(){
             tag = tag.replace('{{DESCRIPTION}}', data.description)
             tag = tag.replace('{{NETWORK_SHORT}}', data.network)
             tag = tag.replace('{{WALLET_SHORT}}', data.walletName)
+            tag = tag.replace('{{JS_ACTION}}', `showAirdrop('${data.id}', '${data.type}')`)
             doingContent.innerHTML += tag
         }
     } else {
@@ -154,6 +162,7 @@ function setAirdrop(){
             tag = tag.replace('{{DESCRIPTION}}', data.description)
             tag = tag.replace('{{NETWORK_SHORT}}', data.network)
             tag = tag.replace('{{WALLET_SHORT}}', data.walletName)
+            tag = tag.replace('{{JS_ACTION}}', `showAirdrop('${data.id}', '${data.type}')`)
             ongoingContent.innerHTML += tag
         }
     } else {
@@ -167,9 +176,14 @@ function setAirdrop(){
             tag = tag.replace('{{DESCRIPTION}}', data.description)
             tag = tag.replace('{{NETWORK_SHORT}}', data.network)
             tag = tag.replace('{{WALLET_SHORT}}', data.walletName)
+            tag = tag.replace('{{JS_ACTION}}', `showAirdrop('${data.id}', '${data.type}')`)
             completedContent.innerHTML += tag
         }
     } else {
         completedContent.innerHTML = emptyStateAirdrop()
     }
+}
+
+function showAirdrop(id, type){
+    console.log(id, type)
 }

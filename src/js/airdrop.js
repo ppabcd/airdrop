@@ -4,12 +4,35 @@ function resetAirdropModal(){
     let type = qs('#form-airdrop-type')
     let wallet = qs('#form-airdrop-wallet')
     let post = qs('#form-airdrop-post')
+    let addOnSection = qsa('.addOnSection')
+    if(typeof(addOnSection) != 'undefined' && addOnSection != null){
+        for(let i = 0; i < addOnSection.length; i++){
+            addOnSection[i].remove()
+        }
+    }
 
     name.value = ''
     description.value = ''
     type.value = ''
     wallet.value = ''
     post.value = ''
+    airdropTemp = null
+    qs("#deleteAirdropButton").classList.add('hidden')
+}
+function addOnElement(){
+    return `
+    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5 addOnSection">
+        <input type="text" autocomplete="given-name" class="addOnInformation max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" placeholder="Key">
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <!-- Wallet selection -->
+            <input type="text" autocomplete="given-name" class="valueAddOnInformation max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" placeholder="Value">
+        </div>
+    </div>    
+`
+}
+function addMoreInformation(){
+    let formfield = qs("#form-airdrop-field")
+    formfield.insertAdjacentHTML('beforeend', addOnElement())
 }
 function clearAirdropModal(){
     resetAirdropModal()
@@ -24,6 +47,7 @@ function addAirdrop(){
     let uniqueTime = randomNumber(0,59);
     let time = new Date().getTime()/1000
     let walletData = wallet.value.split('|')
+    let id = parseInt(time) + uniqueTime
 
     console.log(name.value, description.value, type.value, wallet.value, post.value)
     if(name.value == ''|| description.value == '' || type.value == '' || wallet.value == '' || post.value == ''){
@@ -31,7 +55,7 @@ function addAirdrop(){
         return
     }
     let data = {
-        id: parseInt(time) + uniqueTime,
+        id: id,
         name: name.value,
         description: description.value,
         type: type.value,
@@ -41,7 +65,7 @@ function addAirdrop(){
         walletPlain: wallet.value,
         post: post.value
     }
-    axios.put(url+'airdrop/' + type.value +'/'+ parseInt(time) + uniqueTime+'.json', data)
+    axios.put(url+'airdrop/' + type.value +'/'+ id + '.json', data)
     .then(function(response){
         alert('Airdrop added')
         clearAirdropModal()
@@ -56,6 +80,7 @@ function getAirdrop(){
     .then(function(response){
         let data = response.data
         if(!data){
+            airdrop = []
             setAirdrop()
             return
         }
@@ -126,6 +151,7 @@ function emptyStateAirdrop(){
 `
 }
 function setAirdrop(){
+    console.log("Testing")
     let doing = getType('doing')
     let ongoing = getType('ongoing')
     let completed = getType('completed')
@@ -138,7 +164,6 @@ function setAirdrop(){
     ongoingContent.innerHTML = ''
     completedContent.innerHTML = ''
 
-    console.log(doing.length !== 0, ongoing.length !== 0, completed.length !== 0)
     if(doing.length !== 0){        
         for(let i in doing){
             let data = doing[i]
@@ -184,6 +209,25 @@ function setAirdrop(){
     }
 }
 
-function showAirdrop(id, type){
-    console.log(id, type)
+async function showAirdrop(id, type){
+    console.log("testing")
+    let airdropData = await axios.get(url+`airdrop/${type}/${id}.json`)
+    if(!airdropData.data){
+        return
+    }
+
+    qs('#form-airdrop-name').value = airdropData.data.name
+    qs('#form-airdrop-description').value = airdropData.data.description
+    qs('#form-airdrop-wallet').value = airdropData.data.walletPlain
+    qs("#form-airdrop-type").value = airdropData.data.type
+    qs("#form-airdrop-post").value = airdropData.data.post
+    qs("#deleteAirdropButton").classList.remove('hidden')
+    airdropTemp = `${type}/${id}`
+    toggleModal('modalAirdrop', 'open')
+}
+async function deleteAirdrop(){
+    let id = airdropTemp
+    await axios.delete(url+`airdrop/${id}.json`)
+    clearAirdropModal()
+    getAirdrop()
 }

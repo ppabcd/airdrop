@@ -1,6 +1,9 @@
 function qs(query){
     return document.querySelector(query);
 }
+function qsa(query){
+    return document.querySelectorAll(query);
+}
 function encrypt(message = '', key = ''){
     return CryptoJS.AES.encrypt(message, key).toString();
 }

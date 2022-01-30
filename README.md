@@ -38,7 +38,7 @@ Setelah melakukan submit, maka data tersebut akan disimpan didalam cache. Ketika
 ## TODO
 - [x] Management Wallet
 - [x] Management Network
-- [ ] Management Airdrop
+- [x] Management Airdrop
 - [ ] Integration Social Media API
 - [ ] Database Connection with Auth
 - [ ] Generate Wallet

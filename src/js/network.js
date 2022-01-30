@@ -3,6 +3,9 @@ async function getNetworks(){
     await axios.get(url+'network.json')
         .then(function(response){
             let data = response.data
+            if(!data){
+                return
+            }
             let keys = Object.keys(data)
             for(let i = 0; i < keys.length; i++){
                 data[keys[i]].id = keys[i]
@@ -10,7 +13,7 @@ async function getNetworks(){
             }
         })
         .catch(function(error){
-            console.log(error)
+            console.error(error)
         })
     setNetwork()
 }
@@ -21,7 +24,7 @@ async function deleteNetwork(key){
             getNetworks()
         })
         .catch(function(error){
-            console.log(error)
+            console.error(error)
         })
 }
 
@@ -72,7 +75,6 @@ qs('#form-wallet-network').addEventListener('change', function(){
     let networkName = qs('#network-name')
     let explorerUrl = qs('#explorer-url')
     let networkShortName = qs('#network-short-name')
-    console.log(network.value)
     if(network.value == '-'){
         networkName.classList.remove('hidden-important')
         networkShortName.classList.remove('hidden-important')

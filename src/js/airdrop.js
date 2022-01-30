@@ -36,7 +36,8 @@ function addMoreInformation(){
 }
 function clearAirdropModal(){
     resetAirdropModal()
-    toggleModal('modalAirdrop', 'close')
+    editAirdrop()
+    toggleModal('modalAirdrop', 'close')    
 }
 function addAirdrop(){
     let name = qs('#form-airdrop-name')
@@ -51,7 +52,6 @@ function addAirdrop(){
     let walletData = wallet.value.split('|')
     let id = parseInt(time) + uniqueTime
 
-    console.log(name.value, description.value, type.value, wallet.value, post.value)
     if(name.value == ''|| description.value == '' || type.value == '' || wallet.value == '' || post.value == ''){
         alert('Please fill all the fields')
         return
@@ -84,8 +84,8 @@ function addAirdrop(){
             clearAirdropModal()
             getAirdrop()
         })
-        .catch((err) => {
-            console.log(err)
+        .catch((error) => {
+            console.error(error)
         })
 }
 function getAirdrop(){
@@ -105,7 +105,6 @@ function getAirdrop(){
 }
 function getType(type){
     let allowedType = ['doing', 'ongoing', 'completed']
-    console.log(airdrop[type])
     if(!inArray(type, allowedType)){
         return []
     }
@@ -164,7 +163,6 @@ function emptyStateAirdrop(){
 `
 }
 function setAirdrop(){
-    console.log("Testing")
     let doing = getType('doing')
     let ongoing = getType('ongoing')
     let completed = getType('completed')
@@ -223,29 +221,75 @@ function setAirdrop(){
 }
 
 async function showAirdrop(id, type){
-    console.log("testing")
     let airdropData = await axios.get(url+`airdrop/${type}/${id}.json`)
     if(!airdropData.data){
         return
+    } 
+
+    let formList = {
+        name: 'name',
+        description: 'description',
+        wallet: 'walletPlain',
+        type: 'type',
+        post: 'post'
+    }
+    for(let i in formList){
+        qs(`#form-airdrop-${i}-text`).innerHTML = ''
+        qs(`#form-airdrop-${i}`).value = airdropData.data[formList[i]]
+        qs(`#form-airdrop-${i}`).classList.add('hidden')
+
+        let dataSpan = airdropData.data[formList[i]]
+        let additionalData = null
+        if(i == 'wallet'){
+            let walletData = dataSpan.split('|')
+            if(walletData.length == 3){
+                dataSpan = walletData[0] + ' ' + walletData[2].substring(0, 7) + '...' + walletData[2].substring(walletData[2].length - 5, walletData[2].length)
+                additionalData = walletData[1]
+            }
+        }
+        if(i == 'post'){
+            qs(`#form-airdrop-${i}-text`).href = dataSpan
+            qs(`#form-airdrop-${i}-text`).innerHTML = qs(`#form-airdrop-${i}-text`).hostname
+            qs(`#form-airdrop-${i}-text`).classList.remove('hidden')
+        } else {
+            let dataText = document.createTextNode(dataSpan)
+            qs(`#form-airdrop-${i}-text`).appendChild(dataText)
+            if(additionalData){
+                qs(`#form-airdrop-${i}-text`).innerHTML += `<br><span class="text-gray-600">${additionalData}</span>`
+            }
+            qs(`#form-airdrop-${i}-text`).classList.remove('hidden')
+        }
+        
     }
 
-    qs('#form-airdrop-name').value = airdropData.data.name
-    qs('#form-airdrop-description').value = airdropData.data.description
-    qs('#form-airdrop-wallet').value = airdropData.data.walletPlain
-    qs("#form-airdrop-type").value = airdropData.data.type
-    qs("#form-airdrop-post").value = airdropData.data.post
     qs("#deleteAirdropButton").classList.remove('hidden')
+    qs("#edit-airdrop-button").classList.remove('hidden')
+    qs("#submit-airdrop-button").classList.add('hidden')
     airdropTemp = `${type}/${id}`
 
     if(!isEmptyObject(airdropData.data.addOn)){
         let formfield = qs("#form-airdrop-field")
         for(let i in airdropData.data.addOn){
             formfield.insertAdjacentHTML('beforeend', addOnElement().replace('{{KEY_VALUE}}', i).replace('{{VALUE_DATA}}', airdropData.data.addOn[i]))
-            console.log("asdasda")
         }
     }
     
     toggleModal('modalAirdrop', 'open')
+}
+async function editAirdrop(){
+    let formList = {
+        name: 'name',
+        description: 'description',
+        wallet: 'walletPlain',
+        type: 'type',
+        post: 'post'
+    }
+    for(let i in formList){
+        qs(`#form-airdrop-${i}`).classList.remove('hidden')
+        qs(`#form-airdrop-${i}-text`).classList.add('hidden')
+    }
+    qs("#edit-airdrop-button").classList.add('hidden')
+    qs("#submit-airdrop-button").classList.remove('hidden')
 }
 async function deleteAirdrop(){
     let id = airdropTemp

@@ -46,7 +46,7 @@ function login(){
         changeMenu('airdrop')
         // refreshData()
     } catch(error){
-        console.log(error);
+        console.error(error);
         alert("Wrong password")
     }
 }
@@ -60,7 +60,6 @@ function checkAccount(){
         return
     }
     if(localStorage.getItem('cache-airdrop-expired') == null || parseInt(localStorage.getItem('cache-airdrop-expired')) < new Date().getTime()/1000){
-        console.log("Hello")
         localStorage.removeItem('key-airdrop')
         localStorage.removeItem('cache-airdrop-expired')
         return

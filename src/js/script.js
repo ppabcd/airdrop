@@ -1,17 +1,14 @@
 function changeMenu(type){
-    switch(type){
-        case 'wallet':
-            qs('#wallet-menu').classList.add('active')
-            qs('#wallet-section').classList.remove('hidden-important')
-            qs('#airdrop-menu').classList.remove('active')
-            qs('#airdrop-section').classList.add('hidden-important')
-            break;
-        case 'airdrop':
-            qs('#wallet-menu').classList.remove('active')
-            qs('#wallet-section').classList.add('hidden-important')
-            qs('#airdrop-menu').classList.add('active')
-            qs('#airdrop-section').classList.remove('hidden-important')
-            break;
+    let listMenu = ['wallet', 'airdrop', 'sosmed', 'channel']
+
+    for(let i = 0; i < listMenu.length; i++){
+        qs(`#${listMenu[i]}-menu`).classList.remove('active')
+        qs(`#${listMenu[i]}-section`).classList.add('hidden-important')        
+    }
+
+    if(inArray(type, ['wallet', 'airdrop', 'sosmed', 'channel'])){
+        qs(`#${type}-menu`).classList.add('active')
+        qs(`#${type}-section`).classList.remove('hidden-important')
     }
 }
 

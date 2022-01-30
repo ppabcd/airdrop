@@ -80,7 +80,7 @@ function addWallet(){
             getNetworks()
         })
         .catch((err) => {
-            console.log(err)
+            console.error(err)
         })
 }
 function editWallet(key){
@@ -103,7 +103,7 @@ function editWallet(key){
             toggleModal('modalWallet', 'open')
         })
         .catch(function(error){
-            console.log(error)
+            console.error(error)
         })
 }
 function deleteWallet(key){
@@ -113,7 +113,7 @@ function deleteWallet(key){
             getWallets()
         })
         .catch(function(error){
-            console.log(error)
+            console.error(error)
         })
 }
 async function getWallets(){
@@ -132,7 +132,7 @@ async function getWallets(){
             }
         })
         .catch(function(error){
-            console.log(error)
+            console.error(error)
         }).finally(() => {
             setWallets()
         })

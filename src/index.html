@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Start CSS -->
-        <link href="/output.css?v=1.0.4" rel="stylesheet">
+        <link href="/output.css" rel="stylesheet">
         <!-- END CSS -->
         <title>Aplikasi Management Airdrop</title>
     </head>
@@ -79,6 +79,8 @@
                 <div class="max-w-3xl mx-auto lg:max-w-7xl px-4 lg:px-8 flex space-x-2 flex-row mb-5">
                     <button id="airdrop-menu" class="active menu" onclick="changeMenu('airdrop')">Airdrop</button>
                     <button id="wallet-menu" class="menu" onclick="changeMenu('wallet')">Wallet</button>
+                    <button id="sosmed-menu" class="menu" onclick="changeMenu('sosmed')">Social Media</button>
+                    <button id="channel-menu" class="menu" onclick="changeMenu('channel')">Channel Subscribe</button>
                 </div>
                 <div id="airdrop-section" class="max-w-3xl mx-auto grid lg:grid-cols-3 grid-cols-1 lg:max-w-7xl px-4 lg:px-8 md:justify-between md:space-x-5 md:flex">
                     <div class="w-full">
@@ -243,6 +245,13 @@
                             </div>
                         </div>
                     <!-- </div> -->
+                </div>
+
+                <div id="sosmed-section" class="max-w-3xl mx-auto grid lg:grid-cols-2 grid-cols-1 lg:max-w-7xl px-4 lg:px-8 md:justify-between md:space-x-5 md:flex">
+                    
+                </div>
+                <div id="channel-section" class="max-w-3xl mx-auto grid lg:grid-cols-2 grid-cols-1 lg:max-w-7xl px-4 lg:px-8 md:justify-between md:space-x-5 md:flex">
+                   
                 </div>
             </main>
         </div>
@@ -464,6 +473,7 @@
                                         </label>
                                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                                             <input type="text" id="form-airdrop-name" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" placeholder="Airdrop Name">
+                                            <span id="form-airdrop-name-text" class="hidden"></span>
                                         </div>
                                     </div>
                                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -472,6 +482,7 @@
                                         </label>
                                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                                             <textarea placeholder="Airdrop Description" rows="4" name="comment" id="form-airdrop-description" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                                            <span id="form-airdrop-description-text" class="hidden"></span>
                                         </div>
                                     </div>
                                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -485,6 +496,7 @@
                                                 <option value="ongoing">On Going</option>
                                                 <option value="completed">Completed</option>
                                             </select>
+                                            <span id="form-airdrop-type-text" class="hidden"></span>
                                         </div>
                                     </div>
                                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -495,6 +507,7 @@
                                             <!-- Wallet selection -->
                                             <select id="form-airdrop-wallet" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                             </select>
+                                            <span id="form-airdrop-wallet-text" class="hidden"></span>
                                         </div>
                                     </div>
                                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -503,25 +516,31 @@
                                         </label>
                                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                                             <input type="text" id="form-airdrop-post" autocomplete="given-name" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" placeholder="https://t.me/111111/11111">
+                                            <a href="#" class="hidden text-indigo-500 font-semibold" target='_blank' id="form-airdrop-post-text"></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-5 sm:mt-6">
-                        <button onclick="addMoreInformation()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">Add More Information</button>
-                    </div>
-                    <div class="mt-2 hidden" id="deleteAirdropButton">
-                        <button onclick="deleteAirdrop()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm">Delete Airdrop</button>
-                    </div>
-                    <div class="mt-2 sm:mt-2 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-                        <button onclick="addAirdrop()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">
-                            Submit
-                        </button>
-                        <button onclick="clearAirdropModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">
-                            Cancel
-                        </button>
+                    <div class="mt-5">
+                        <div class="hidden">
+                            <button onclick="addMoreInformation()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">Add More Information</button>
+                        </div>
+                        <div class="mt-2 hidden" id="deleteAirdropButton">
+                            <button onclick="deleteAirdrop()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm">Delete Airdrop</button>
+                        </div>
+                        <div class="mt-2 sm:mt-2 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                            <button id="edit-airdrop-button" onclick="editAirdrop()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm hidden">
+                                Edit
+                            </button>
+                            <button id="submit-airdrop-button" onclick="addAirdrop()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">
+                                Submit
+                            </button>
+                            <button onclick="clearAirdropModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -532,13 +551,13 @@
         <script src="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/datepicker.bundle.js"></script>
 
         <!-- Start JS -->
-        <script src="js/vars.js?v=1.0.4"></script>
-        <script src="js/helpers.js?v=1.0.4"></script>
-        <script src="js/wallet.js?v=1.0.4"></script>
-        <script src="js/network.js?v=1.0.4"></script>
-        <script src="js/airdrop.js?v=1.0.4"></script>
-        <script src="js/script.js?v=1.0.4"></script>
-        <script src="js/auth.js?v=1.0.4"></script>
+        <script src="js/vars.js"></script>
+        <script src="js/helpers.js"></script>
+        <script src="js/wallet.js"></script>
+        <script src="js/network.js"></script>
+        <script src="js/airdrop.js"></script>
+        <script src="js/script.js"></script>
+        <script src="js/auth.js"></script>
         <!-- End JS -->
     </body>
 </html>

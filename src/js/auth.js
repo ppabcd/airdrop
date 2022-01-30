@@ -80,4 +80,3 @@ function checkAccount(){
     changeMenu('airdrop')
 }
 checkAccount()
-

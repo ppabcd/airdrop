@@ -90,18 +90,18 @@ function addAirdrop(){
 }
 function getAirdrop(){
     axios.get(url+'airdrop.json')
-    .then(function(response){
-        let data = response.data
-        if(!data){
-            airdrop = []
+        .then(function(response){
+            let data = response.data
+            if(!data){
+                airdrop = []
+                setAirdrop()
+                return
+            }
+            airdrop = response.data
             setAirdrop()
-            return
-        }
-        airdrop = response.data
-        setAirdrop()
-    }).catch((err) =>{
-        console.error(err)
-    })
+        }).catch((err) =>{
+            console.error(err)
+        })
 }
 function getType(type){
     let allowedType = ['doing', 'ongoing', 'completed']

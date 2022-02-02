@@ -23,7 +23,7 @@ export default defineHandle(async(req, res)=>{
     setCookie(res, 'firebase', url, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
     })
-    setCookie(res, 'password', Buffer.from(body.password).toString('base64'), {
+    setCookie(res, 'ency', Buffer.from(body.password).toString('base64'), {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
     })
     return {message: 'ok'}

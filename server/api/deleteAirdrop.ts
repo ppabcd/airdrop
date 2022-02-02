@@ -4,7 +4,7 @@ import {decrypt, isValidHttpUrl} from '../helpers'
 
 export default defineHandle(async(req, res)=>{
     let url = await useCookie(req, 'firebase')
-    let password = await useCookie(req, 'password')
+    let password = await useCookie(req, 'ency')
     if(!url || !password){
         res.statusCode = 401
         return {

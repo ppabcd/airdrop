@@ -21,7 +21,7 @@ export default defineHandle(async(req, res)=>{
             }
         }
         
-        let password = await useCookie(req, 'password')
+        let password = await useCookie(req, 'ency')
         let decodedPassword = Buffer.from(password, 'base64').toString()
         
         let decryptApiKey = decrypt(body.apiData, decodedPassword)

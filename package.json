@@ -1,5 +1,22 @@
 {
-  "private": true,
+  "name": "airdrop",
+  "version": "1.1.0",
+  "description": "Airdrop project is an project for manage your airdrop",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppabcd/airdrop.git"
+  },
+  "keywords": [
+    "airdrop"
+  ],
+  "author": "Reza Juliandri",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ppabcd/airdrop/issues"
+  },
+  "homepage": "https://github.com/ppabcd/airdrop#readme",
+  "private": false,
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",

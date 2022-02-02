@@ -4,7 +4,7 @@ import {TwitterApi} from 'twitter-api-v2'
 
 export default defineHandle(async(req, res)=>{
     let body = await useBody(req)
-    let password = await useCookie(req, 'password')
+    let password = await useCookie(req, 'ency')
     
     let decodedPassword = Buffer.from(password, 'base64').toString()
     let accountData = []

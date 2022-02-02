@@ -2,7 +2,7 @@
 Airdrop management adalah sebuah tools untuk memudahkan dalam memanagement airdrop. Tools ini menggunakan database dari firebase, adapun url dari database akan disimpan secara
 lokal sehingga hanya pengguna tersebut yang dapat mengakses data airdropnya.
 
-Tools ini dibuat dengan menggunakan vanilla javascript dan disertai dengan tailwind sebagai stylingnya.
+Tools ini dibuat dengan menggunakan Nuxt3 dan disertai dengan tailwind sebagai stylingnya.
 
 ## Installasi
 Project ini memerlukan nodejs unutk melakukan compile tailwindcss. Untuk proses installasi package yang diperlukan dengan cara sebagai berikut.
@@ -11,9 +11,9 @@ npm install
 ```
 Selanjutnya untuk menjalankan project ini dengan menggunakan perintah berikut.
 ```
-npm run http
+npm run dev
 ```
-Project akan dijalankan pada port 8080 dengan url sesuai yang ditampilkan pada terminal.
+Project akan dijalankan dan perintah tersebut akan menjalankan nuxt3
 
 ## Cara menggunakan
 Untuk menggunakannya dengan cara membuka halaman website yang sudah dijalankan sebelumnya. Pada halaman awal, kamu akan diminta untuk mengisikan **URL firebase** dan **password**.
@@ -39,9 +39,9 @@ Setelah melakukan submit, maka data tersebut akan disimpan didalam cache. Ketika
 - [x] Management Wallet
 - [x] Management Network
 - [x] Management Airdrop
-- [ ] Integration Social Media API
+- [x] Integration Social Media API
 - [ ] Database Connection with Auth
-- [ ] Generate Wallet
+- [x] Generate Wallet
 - [ ] Subscribe Airdrop Channel
 - [ ] Tweet template
 - [ ] Cache data to prevent frequently request db

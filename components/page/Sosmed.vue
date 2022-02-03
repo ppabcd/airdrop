@@ -85,6 +85,10 @@ async function tweetAction(){
         alert('Please input tweet text')
         return
     }
+    if(tweetText.value.length > 280){
+        alert('Tweet text is too long')
+        return
+    }
     twitterRestData.tweet = tweetText.value
     const {data} = await useFetch('/api/tweet', {
         method: 'POST',
@@ -304,7 +308,7 @@ export default {
                 </div>
                 <div class="block mb-3">
                     <label>Tweet</label>
-                    <textarea v-model="tweetText" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                    <textarea rows="5" v-model="tweetText" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
                 </div>
                 <div class="mt-2 sm:mt-2 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
                     <button @click="generateTweet" id="submit-airdrop-button"  type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">
@@ -454,7 +458,7 @@ export default {
                                                             <td class="px-6 py-5 whitespace-nowrap text-sm font-medium text-center" colspan="6">Template data not available</td>
                                                         </tr>
                                                        <tr v-else v-for="tl in templateList" :key="tl">
-                                                            <td class="px-6 py-5 whitespace-nowrap text-sm font-medium">{{tl.template}}</td>
+                                                            <td class="px-6 py-5 whitespace-nowrap text-sm font-medium">{{tl.template.substring(0, 120)+'...'}}</td>
                                                             <td class="px-6 py-5 whitespace-nowrap text-right text-sm font-medium">
                                                                 <a href="#" @click="useTemplate(tl.template)" class="text-indigo-600 hover:text-indigo-900">Use</a>
                                                             </td>

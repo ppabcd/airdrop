@@ -43,7 +43,7 @@ Setelah melakukan submit, maka data tersebut akan disimpan didalam cache. Ketika
 - [ ] Database Connection with Auth
 - [x] Generate Wallet
 - [ ] Subscribe Airdrop Channel
-- [ ] Tweet template
+- [x] Tweet template
 - [ ] Cache data to prevent frequently request db
 
 ## Kontribusi

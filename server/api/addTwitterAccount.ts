@@ -28,7 +28,7 @@ export default defineHandle(async(req, res)=>{
         accessSecret: body.accessTokenSecret
     })
     try {
-        let dataTweet = await client.v1.tweet('This tweet is testing for managing airdrop application')
+        await client.v2.me()
     } catch(err){
         res.statusCode = 401
         return {

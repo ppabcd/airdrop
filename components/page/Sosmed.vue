@@ -31,6 +31,7 @@ async function addAccount(){
             accountData.value = data.value.account
             accessToken.value = ''
             accessTokenSecret.value = ''
+            alert("Successfully added your twitter account")
         } else if(data.value.message == "error"){
             alert(data.value.error)
         }

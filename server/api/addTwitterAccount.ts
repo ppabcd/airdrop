@@ -45,7 +45,7 @@ export default defineHandle(async(req, res)=>{
         apiData: apiDataString
     })
 
-    setCookie(res, 'twitter-account', JSON.stringify(accountData), {
+    setCookie(res, 'twitter-account', JSON.stringify(accountData.filter(x => !!x)), {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
     })
 

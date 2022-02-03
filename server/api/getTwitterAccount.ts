@@ -5,8 +5,8 @@ export default defineHandle(async(req, res)=>{
 
     let twitterAccountCookie = await useCookie(req, 'twitter-account')
 
-    if(twitterAccountCookie){
-        accountData = JSON.parse(twitterAccountCookie)
+    if(twitterAccountCookie !== undefined){
+        accountData = JSON.parse(twitterAccountCookie).filter(x => !!x)
     }
 
     return {message: 'ok', account: accountData}

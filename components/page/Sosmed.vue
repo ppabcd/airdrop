@@ -173,6 +173,9 @@ async function generateTweet(){
     let randData = nuxtApp.$randomNumber(0, templateList.value.length-1)
     tweetText.value = templateList.value[randData].template.replace('{USERNAME}', getUserameTag())
 }
+async function useTemplate(text){
+    tweetText.value = text.replace('{USERNAME}', getUserameTag())
+}
 async function addTweetTemplate(){
     if(templateInput.value == ''){
         alert('Please input template')

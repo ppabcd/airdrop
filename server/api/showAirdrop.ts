@@ -22,7 +22,6 @@ export default defineHandle(async(req, res)=>{
     
     }
     const body = await useBody(req)
-    console.log(url+'airdrop/'+body.type+'/'+body.id+'.json')
     let data = await axios.get(url+'airdrop/'+body.type+'/'+body.id+'.json')
     return {message: 'ok', data: data.data?data.data:null}
 })

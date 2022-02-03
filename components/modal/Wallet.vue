@@ -80,7 +80,7 @@ async function addWallet(){
     const {data} = await useFetch('/api/postWallet', {
         method: 'POST',
         body: {
-            id: id.value == '' ? parseInt(time) + uniqueTime : id.value,
+            id: id.value == '' || id.value == undefined ? parseInt(time) + uniqueTime : id.value,
             networkId: parseInt(new Date().getTime()/1000)+uniqueTime,
             name: name.value,
             shortName: shortName.value,

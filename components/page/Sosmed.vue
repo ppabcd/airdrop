@@ -228,7 +228,6 @@ async function getAllTweetTemplate(){
     })
     if(data.value){
         if(data.value.message == "ok"){
-            console.log(data.value.template)
             templateList.value = data.value.data
         } else if(data.value.message == "error"){
             alert(data.value.error)
@@ -248,17 +247,11 @@ export default {
         SwitchLabel,
     },
     watch: {
-        isRetweet(val){
-            if(val){
-                console.log(val)
-            }
-        },
         isLike(val){
             if(this.isRetweet){
                 if(this.$isValidHttpUrl(this.retweetTarget)){
                     let splitUrl = this.retweetTarget.split('/')
                     let idLike = splitUrl[splitUrl.length - 1]
-                    console.log(idLike)
                     if(!isNaN(idLike)){
                         this.likeTarget = idLike
                     }

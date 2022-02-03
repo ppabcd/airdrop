@@ -85,6 +85,10 @@ export default defineHandle(async(req, res)=>{
     
         return responseData
     } catch(err){
-        console.log(err)
+        console.error(err)
+        return {
+            message: 'error',
+            error: err
+        }
     }
 })

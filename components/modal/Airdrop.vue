@@ -57,6 +57,10 @@ async function addAirdrop(){
         }
     }
 
+    if(name.value == '' || description.value == '' || type.value == '' || wallet.value == ''){
+        nuxtApp.$toast.error('Please fill all field')
+    }
+
     let airdropData = {
         id: id.value == '' ? parseInt(time) + uniqueTime : id.value,
         name: name.value,

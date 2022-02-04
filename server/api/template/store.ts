@@ -1,6 +1,6 @@
+import { defineHandle, useCookie, useBody } from 'h3'
+import {decrypt, isValidHttpUrl} from '../../helpers'
 import axios from 'axios'
-import { useCookie, defineHandle, useBody} from 'h3'
-import {decrypt, isValidHttpUrl} from '../helpers'
 
 export default defineHandle(async(req, res)=>{
     let url = await useCookie(req, 'firebase')
@@ -22,6 +22,11 @@ export default defineHandle(async(req, res)=>{
     }
     const body = await useBody(req)
 
-    await axios.delete(url+'/network/'+body.id+'.json')
+    let data = {
+        id: body.id,
+        template: body.template
+    }
+
+    await axios.put(url+'template/' + body.id + '.json', data)
     return {message: 'ok'}
 })

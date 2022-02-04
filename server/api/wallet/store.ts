@@ -1,5 +1,5 @@
 import { defineHandle, useCookie, useBody } from 'h3'
-import {decrypt, isValidHttpUrl} from '../helpers'
+import {decrypt, isValidHttpUrl} from '../../helpers'
 import axios from 'axios'
 
 export default defineHandle(async(req, res)=>{
@@ -20,13 +20,29 @@ export default defineHandle(async(req, res)=>{
             message: 'Url is not valid',
         }
     }
+ 
     const body = await useBody(req)
+
+    let isAddNetwork = false
+    if(body.network == '-'){
+        isAddNetwork = true
+        let dataNetwork = {
+            name: body.networkName,
+            shortName: body.networkShortName,
+            url: body.explorerUrl
+        }
+        await axios.put(url+'network/' + body.networkId +'.json', dataNetwork)
+    }
 
     let data = {
         id: body.id,
-        template: body.template
+        name: body.name,
+        shortName: body.shortName,
+        address: body.address,
+        network: isAddNetwork ? body.networkName : body.network,
     }
-
-    await axios.put(url+'template/' + body.id + '.json', data)
-    return {message: 'ok'}
+    await axios.put(url+'wallet/' + body.id +'.json', data)
+    return {
+        message: 'ok'
+    }
 })

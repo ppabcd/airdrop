@@ -8,7 +8,7 @@ const authModal = useAuthModal()
 
 const walletData = useWalletData()
 async function checkWallet(){
-    const {data} = await useFetch('/api/getWallet', {
+    const {data} = await useFetch('/api/wallet', {
         method: 'POST'
     })
     if(data.value){

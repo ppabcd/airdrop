@@ -1,5 +1,4 @@
-import { setCookie, useBody, defineHandle } from 'h3'
-import {encrypt, isValidHttpUrl} from '../helpers'
+import { defineHandle } from 'h3'
 import { generateMnemonic, EthHdWallet } from 'eth-hd-wallet'
 
 

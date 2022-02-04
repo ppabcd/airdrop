@@ -26,7 +26,7 @@ const isHideType = ref(true)
 const networkData = useNetworkData()
 const airdropData = useAirdropData()
 async function checkNetwork(){
-    const {data} = await useFetch('/api/getNetwork', {
+    const {data} = await useFetch('/api/network', {
         method: 'POST'
     })
     if(data.value){
@@ -36,7 +36,7 @@ async function checkNetwork(){
     }
 }
 async function checkAirdrop(){
-    const {data} = await useFetch('/api/getAirdrop', {
+    const {data} = await useFetch('/api/airdrop', {
         method: 'POST'
     })
     if(data.value){
@@ -75,7 +75,7 @@ async function addAirdrop(){
         return
     }
     if(id.value !== '' && tempType.value !== ''){
-        await useFetch('/api/deleteAirdrop', {
+        await useFetch('/api/airdrop/destroy', {
             method: 'POST',
             body: {
                 id: id.value,
@@ -85,7 +85,7 @@ async function addAirdrop(){
         id.value = ''
         tempType.value = ''
     }
-    const {data} = await useFetch('/api/postAirdrop', {
+    const {data} = await useFetch('/api/airdrop/store', {
        method: 'POST',
        body: airdropData
     })
@@ -99,7 +99,7 @@ async function addAirdrop(){
     }
 }
 async function deleteAirdrop(){
-    const {data} = await useFetch('/api/deleteAirdrop', {
+    const {data} = await useFetch('/api/airdrop/destroy', {
         method: 'POST',
         body: {
             id: id.value,

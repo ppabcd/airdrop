@@ -174,7 +174,7 @@ async function showAirdropModal(){
     airdropModal.value = 1
 }
 async function checkAirdrop(){
-    const {data} = await useFetch('/api/getAirdrop', {
+    const {data} = await useFetch('/api/airdrop', {
         method: 'POST'
     })
     if(data.value){
@@ -188,7 +188,7 @@ function getFormatedDate(date){
     return date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear()
 }
 async function showAirdrop(id, type){
-    const {data} = await useFetch('/api/showAirdrop', {
+    const {data} = await useFetch('/api/airdrop/show', {
         method: 'POST',
         body: {
             id: id,

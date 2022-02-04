@@ -1,5 +1,5 @@
 import { setCookie, useBody, defineHandle } from 'h3'
-import {encrypt, isValidHttpUrl} from '../helpers'
+import {encrypt, isValidHttpUrl} from '../../helpers'
 
 export default defineHandle(async(req, res)=>{
     const body = await useBody(req)

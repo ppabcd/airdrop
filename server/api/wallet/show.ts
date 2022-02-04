@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { useCookie, defineHandle} from 'h3'
-import {decrypt, isValidHttpUrl} from '../helpers'
+import { useCookie, defineHandle, useBody} from 'h3'
+import {decrypt, isValidHttpUrl} from '../../helpers'
 
 export default defineHandle(async(req, res)=>{
     let url = await useCookie(req, 'firebase')
@@ -20,15 +20,9 @@ export default defineHandle(async(req, res)=>{
             message: 'Url is not valid',
         }
     }
-    let request = await axios.get(url+'/wallet.json')
+    const body = await useBody(req)
+
+    let request = await axios.get(url+'/wallet/'+body.id+'.json')
     let data = request.data
-    let wallets = []
-    if(data !== null){
-        let keys = Object.keys(data)
-        for(let i = 0; i < keys.length; i++){
-            data[keys[i]].id = keys[i]
-            wallets.push(data[keys[i]])
-        }
-    }
-    return {message: 'ok', data: wallets}
+    return {message: 'ok', data: data}
 })

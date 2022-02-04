@@ -32,7 +32,7 @@ function networkChanged(){
     isHide.value = (network.value != '-')
 }
 async function generateAddress(){
-    const {data} = await useFetch('/api/generateAddress')
+    const {data} = await useFetch('/api/address/generate')
     if(data.value){
         if(data.value.message == "ok"){
             address.value = data.value.address
@@ -43,7 +43,7 @@ async function generateAddress(){
 }
 
 async function checkWallet(){
-    const {data} = await useFetch('/api/getWallet', {
+    const {data} = await useFetch('/api/wallet', {
         method: 'POST'
     })
     if(data.value){
@@ -53,7 +53,7 @@ async function checkWallet(){
     }
 }
 async function checkNetwork(){
-    const {data} = await useFetch('/api/getNetwork', {
+    const {data} = await useFetch('/api/network', {
         method: 'POST'
     })
     if(data.value){
@@ -77,7 +77,7 @@ async function addWallet(){
         }
     }
     
-    const {data} = await useFetch('/api/postWallet', {
+    const {data} = await useFetch('/api/wallet/store', {
         method: 'POST',
         body: {
             id: id.value == '' || id.value == undefined ? parseInt(time) + uniqueTime : id.value,

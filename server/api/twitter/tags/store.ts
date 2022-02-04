@@ -1,6 +1,4 @@
-import { defineHandle, useCookie, useBody, setCookie } from 'h3'
-import {encrypt} from '../helpers'
-import {TwitterApi} from 'twitter-api-v2'
+import { defineHandle, useBody, setCookie } from 'h3'
 
 export default defineHandle(async(req, res)=>{
     let body = await useBody(req)

@@ -1,5 +1,5 @@
 import { defineHandle, useCookie, useBody, setCookie } from 'h3'
-import {encrypt} from '../helpers'
+import {encrypt} from '../../../helpers'
 import {TwitterApi} from 'twitter-api-v2'
 
 export default defineHandle(async(req, res)=>{

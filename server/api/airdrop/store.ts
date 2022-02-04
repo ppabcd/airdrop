@@ -1,5 +1,5 @@
 import { defineHandle, useCookie, useBody } from 'h3'
-import {decrypt, isValidHttpUrl} from '../helpers'
+import {decrypt, isValidHttpUrl} from '../../helpers'
 import axios from 'axios'
 
 export default defineHandle(async(req, res)=>{

@@ -71,7 +71,7 @@ const dataModalWallet = useDataModalWallet()
 const walletModal = useWalletModal()
 
 async function checkWallet(){
-    const {data} = await useFetch('/api/getWallet', {
+    const {data} = await useFetch('/api/wallet', {
         method: 'POST'
     })
     if(data.value){
@@ -81,7 +81,7 @@ async function checkWallet(){
     }
 }
 async function editWallet(id){
-    const {data} = await useFetch('/api/showWallet', {
+    const {data} = await useFetch('/api/wallet/show', {
         method: 'POST',
         body: {
             id: id
@@ -98,7 +98,7 @@ async function editWallet(id){
     }
 }
 async function deleteWallet(id){
-    const {data} = await useFetch('/api/deleteWallet', {
+    const {data} = await useFetch('/api/wallet/destroy', {
         method: 'POST',
         body: {
             id: id

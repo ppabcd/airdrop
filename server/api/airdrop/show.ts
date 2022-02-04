@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useCookie, defineHandle, useBody} from 'h3'
-import {decrypt, isValidHttpUrl} from '../helpers'
+import {decrypt, isValidHttpUrl} from '../../helpers'
 
 export default defineHandle(async(req, res)=>{
     let url = await useCookie(req, 'firebase')
@@ -19,9 +19,9 @@ export default defineHandle(async(req, res)=>{
             statusCode: 400,
             message: 'Url is not valid',
         }
+    
     }
     const body = await useBody(req)
-
-    await axios.delete(url+'/airdrop/'+body.type+'/'+body.id+'.json')
-    return {message: 'ok'}
+    let data = await axios.get(url+'airdrop/'+body.type+'/'+body.id+'.json')
+    return {message: 'ok', data: data.data?data.data:null}
 })

@@ -58,7 +58,7 @@
 <script setup>
 const networkData = useNetworkData()
 async function checkNetwork(){
-    const {data} = await useFetch('/api/getNetwork', {
+    const {data} = await useFetch('/api/network', {
         method: 'POST'
     })
     if(data.value){
@@ -68,7 +68,7 @@ async function checkNetwork(){
     }
 }
 async function deleteNetwork(id){
-    const {data} = await useFetch('/api/deleteNetwork', {
+    const {data} = await useFetch('/api/network/destroy', {
         method: 'POST',
         body: {
             id: id

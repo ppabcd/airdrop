@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { useCookie, defineHandle, useBody} from 'h3'
-import {decrypt, isValidHttpUrl} from '../helpers'
+import { useCookie, defineHandle} from 'h3'
+import {decrypt, isValidHttpUrl} from '../../helpers'
 
 export default defineHandle(async(req, res)=>{
     let url = await useCookie(req, 'firebase')
@@ -20,8 +20,15 @@ export default defineHandle(async(req, res)=>{
             message: 'Url is not valid',
         }
     }
-    const body = await useBody(req)
-
-    let request = await axios.delete(url+'/template/'+body.id+'.json')
-    return {message: 'ok'}
+    let request = await axios.get(url+'/network.json')
+    let data = request.data
+    let networks = []
+    if(data !== null){
+        let keys = Object.keys(data)
+        for(let i = 0; i < keys.length; i++){
+            data[keys[i]].id = keys[i]
+            networks.push(data[keys[i]])
+        }
+    }
+    return {message: 'ok', data: networks}
 })

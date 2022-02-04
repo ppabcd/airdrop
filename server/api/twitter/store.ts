@@ -1,6 +1,6 @@
 import { defineHandle, useBody, useCookie } from 'h3'
-import {TwitterApi, UserV2Result} from 'twitter-api-v2'
-import { decrypt } from '../helpers'
+import {TwitterApi} from 'twitter-api-v2'
+import { decrypt } from '../../helpers'
 
 interface ApiData {
     apiKey: string,

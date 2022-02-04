@@ -1,4 +1,4 @@
-import { defineHandle, useCookie, useBody, setCookie } from 'h3'
+import { defineHandle, useCookie } from 'h3'
 
 export default defineHandle(async(req, res)=>{
     let accountData = []

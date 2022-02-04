@@ -21,7 +21,7 @@ async function addAccount(){
         accessToken: accessToken.value,
         accessTokenSecret: accessTokenSecret.value
     }
-    const {data} = await useFetch('/api/addTwitterAccount', {
+    const {data} = await useFetch('/api/twitter/account/store', {
         method: 'POST',
         body: apiData
     })
@@ -91,7 +91,7 @@ async function tweetAction(){
         return
     }
     twitterRestData.tweet = tweetText.value
-    const {data} = await useFetch('/api/tweet', {
+    const {data} = await useFetch('/api/twitter/store', {
         method: 'POST',
         body: twitterRestData
     })
@@ -105,7 +105,7 @@ async function tweetAction(){
 }
 
 async function getAccount(){
-    const {data} = await useFetch('/api/getTwitterAccount', {
+    const {data} = await useFetch('/api/twitter/account', {
         method: 'GET'
     })
     if(data.value){
@@ -117,7 +117,7 @@ async function getAccount(){
     }
 }
 async function deleteAccount(id){
-    const {data} = await useFetch('/api/deleteTwitterAccount', {
+    const {data} = await useFetch('/api/twitter/account/destroy', {
         method: 'POST',
         body: {
             id: id
@@ -152,7 +152,7 @@ function addTag(){
     }
 }
 async function getTag(){
-    const {data} = await useFetch('/api/getTwitterTag', {
+    const {data} = await useFetch('/api/twitter/tags', {
         method: 'GET'
     })
     if(data.value){
@@ -190,7 +190,7 @@ async function addTweetTemplate(){
     let uniqueTime = nuxtApp.$randomNumber(0,59);
     let time = new Date().getTime()/1000
 
-    const {data} = await useFetch('/api/postTemplate', {
+    const {data} = await useFetch('/api/template/store', {
         method: 'POST',
         body: {
             id: parseInt(time) + uniqueTime,
@@ -212,7 +212,7 @@ async function deleteTemplate(id){
         alert('Please select template')
         return
     }
-    const {data} = await useFetch('/api/deleteTemplate', {
+    const {data} = await useFetch('/api/template/destroy', {
         method: 'POST',
         body: {
             id: id
@@ -228,7 +228,7 @@ async function deleteTemplate(id){
     }
 }
 async function getAllTweetTemplate(){
-    const {data} = await useFetch('/api/getTemplate', {
+    const {data} = await useFetch('/api/template', {
         method: 'GET'
     })
     if(data.value){

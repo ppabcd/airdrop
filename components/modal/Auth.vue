@@ -19,7 +19,7 @@ async function login(){
         url.value = ''
         return
     }
-   const {data} = await useFetch('/api/setUrl', {
+   const {data} = await useFetch('/api/url/store', {
        method: 'POST',
        body: {
             url: url.value,
@@ -31,7 +31,7 @@ async function login(){
    }
 }
 async function checkCredentials(){
-    const {data} = await useFetch('/api/checkUrl')
+    const {data} = await useFetch('/api/url')
     if(data.value){
         if(data.value.message == "ok"){
             showAuthModal.value = 0

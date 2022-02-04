@@ -27,12 +27,18 @@ export default defineHandle(async(req, res)=>{
         let decryptApiKey = decrypt(body.apiData, decodedPassword)
         let jsonApiKey: ApiData = JSON.parse(decryptApiKey)
 
+        console.log(jsonApiKey)
+        
         if(!jsonApiKey.apiKey || !jsonApiKey.apiSecret || !jsonApiKey.accessToken || !jsonApiKey.accessTokenSecret){
             res.statusCode = 401
             return {
                 message: 'error',
                 error: 'Invalid api data'
             }
+        }
+        if(jsonApiKey.apiKey == '_ENV_' || jsonApiKey.apiSecret == '_ENV_'){
+            jsonApiKey.apiKey = process.env.API_KEY
+            jsonApiKey.apiSecret = process.env.API_SECRET
         }
 
         const client = new TwitterApi({

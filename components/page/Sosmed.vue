@@ -2,12 +2,65 @@
 
 const nuxtApp = useNuxtApp()
 
+let isProvided = ref(true)
 let accountId = ref('')
 let accountName = ref('')
 let apiKey = ref('')
 let apiSecret = ref('')
 let accessToken = ref('')
 let accessTokenSecret = ref('')
+let oauthToken = ref('')
+let oauthSecret = ref('')
+let accountPin = ref('')
+
+async function linkAccountConfirmation(){
+    let uniqueTime = nuxtApp.$randomNumber(0,59);
+    let time = new Date().getTime()/1000
+    if(accountName.value == ''){
+        alert('Account name is required')
+        return
+    }
+    let authData = {
+        id: parseInt(time) + uniqueTime,
+        accountName: accountName.value,
+        oauthToken: oauthToken.value,
+        oauthSecret: oauthSecret.value,
+        accountPin: accountPin.value
+    }
+    const {data} = await useFetch('/api/twitter/link-account', {
+        method: 'POST',
+        body: authData
+    })
+    if(data.value){
+        if(data.value.message == "ok"){
+            accountName.value = ''
+            oauthToken.value = ''
+            oauthSecret.value = ''
+            accountPin.value = ''
+            accountData.value = data.value.account
+            alert("Successfully added your twitter account")
+        } else if(data.value.message == "error"){
+            alert(data.value.error)
+        }
+    }
+}
+
+async function linkAccount(){
+    const {data} = await useFetch('/api/twitter/auth', {
+        method: 'POST',
+    })
+    if(data.value){
+        if(data.value.message == "ok"){
+            if(data.value.authLink){
+                oauthToken.value = data.value.authLink.oauth_token
+                oauthSecret.value = data.value.authLink.oauth_token_secret
+                prompt("Visit this link", data.value.authLink.url)
+            }
+        } else if(data.value.message == "error"){
+            alert(data.value.error)
+        }
+    }
+}
 
 async function addAccount(){
     let uniqueTime = nuxtApp.$randomNumber(0,59);
@@ -272,28 +325,54 @@ export default {
             <div class="w-full">
                 <h1 class="font-bold text-lg">Social Media (Twitter)</h1>
                 <small class="mb-2 block">Data ini akan disimpan pada browser pengguna</small>
+                <SwitchGroup as="div" class="flex items-center mb-2">
+                        <Switch v-model="isProvided" :class="[isProvided ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']">
+                        <span aria-hidden="true" :class="[isProvided ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200']" />
+                        </Switch>
+                        <SwitchLabel as="span" class="ml-3">
+                        <span class="text-sm font-medium text-gray-900">Use Provided API Key and API Secret</span>
+                        </SwitchLabel>
+                    </SwitchGroup>
                 <div class="block mb-3">
                     <label>Account Name</label>
                     <input v-model="accountName" type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 </div>
-                <div class="block mb-3">
+                <div class="block mb-3" v-if="!isProvided">
                     <label>API KEY</label>
                     <input v-model="apiKey" type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 </div>
-                <div class="block mb-3">
+                <div class="block mb-3" v-if="!isProvided">
                     <label>API KEY Secret</label>
                     <input v-model="apiSecret" type="password" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 </div>
-                <div class="block mb-3">
+                <div class="block mb-3" v-if="!isProvided">
                     <label>Access Token</label>
                     <input v-model="accessToken" type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 </div>
-                <div class="block mb-3">
+                <div class="block mb-3" v-if="!isProvided">
                     <label>Access Token Secret</label>
                     <input v-model="accessTokenSecret" type="password" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                 </div>
+                <div class="block mb-3" v-if="isProvided">
+                    <label>Oauth Token</label>
+                    <input v-model="oauthToken" disabled type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-200">
+                </div>
+                <div class="block mb-3" v-if="isProvided">
+                    <label>Oauth Token Secret</label>
+                    <input v-model="oauthSecret" disabled type="password" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-200">
+                </div>
+                <div class="block mb-3" v-if="oauthSecret != '' && oauthToken != ''">
+                    <label>PIN</label>
+                    <input v-model="accountPin" type="password" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                </div>
                 <div class="mt-2 sm:mt-2 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-                    <button @click="addAccount" id="submit-airdrop-button"  type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">
+                    <button v-if="oauthSecret == '' && oauthToken == '' && isProvided" @click="linkAccount" id="submit-airdrop-button"  type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-1 sm:text-sm">
+                        Generate Link
+                    </button>
+                    <button v-if="oauthSecret != '' && oauthToken != '' && isProvided" @click="linkAccountConfirmation" id="submit-airdrop-button"  type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-1 sm:text-sm">
+                        Submit
+                    </button>
+                    <button v-if="!isProvided" @click="addAccount" id="submit-airdrop-button"  type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">
                         Submit
                     </button>
                 </div>

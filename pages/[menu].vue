@@ -41,7 +41,13 @@ export default{
             modalAuth: true,
             modalAirdrop: false,
             modalWallet: false,
-            modalNetwork: false
+            modalNetwork: false,
+            title: 'Airdrop'
+        }
+    },
+    head(){
+        return {
+            title: 'Airdrop Management'
         }
     },
     methods: {
@@ -54,11 +60,13 @@ export default{
             ]
             if(!this.$inArray(param, allowed)){
                 if(target == 'airdrop'){
+                    this.title = 'Airdrop'
                     return true
                 }
                 return false
             }
             if(param == target){
+                this.title = target.charAt(0).toUpperCase() + target.slice(1)
                 return true
             }
             return false

@@ -22,3 +22,13 @@ export function isValidHttpUrl(string) {
     }
     return url.protocol === "http:" || url.protocol === "https:";
 }
+export function sortObject(obj, key, type='desc'){
+    let sortData = obj.sort((a, b) => {
+        if(type === 'asc'){
+            return a[key] - b[key];
+        } else {
+            return b[key] - a[key];
+        }
+    });
+    return sortData;
+}

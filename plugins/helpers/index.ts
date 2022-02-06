@@ -29,6 +29,16 @@ export default defineNuxtPlugin(({ nuxt }) => {
             },
             randomNumber(min, max) {
                 return Math.floor(Math.random() * (max - min) ) + min;
+            },
+            sortObject(obj, key, type='desc'){
+                let sortData = obj.sort((a, b) => {
+                    if(type === 'asc'){
+                        return a[key] - b[key];
+                    } else {
+                        return b[key] - a[key];
+                    }
+                });
+                return sortData;
             }
         },
     }

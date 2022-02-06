@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useCookie, defineHandle} from 'h3'
-import {decrypt, isValidHttpUrl} from '../../helpers'
+import {decrypt, isValidHttpUrl, sortByKey, sortObject} from '../../helpers'
 
 export default defineHandle(async(req, res)=>{
     let url = await useCookie(req, 'firebase')
@@ -21,5 +21,15 @@ export default defineHandle(async(req, res)=>{
         }
     }
     let data = await axios.get(url+'/airdrop.json')
-    return {message: 'ok', data: data.data?data.data:{}}
+    for(let key in data.data){
+        let newData = {}
+        let keys = Object.keys(data.data[key])
+        keys.sort()
+        keys.reverse()
+        for(let i = 0; i < keys.length; i++){
+            newData[i+''+keys[i]] = data.data[key][keys[i]]
+        }
+        data.data[key] = newData
+    }
+    return {message: 'ok', data: data.data? data.data : {}}
 })

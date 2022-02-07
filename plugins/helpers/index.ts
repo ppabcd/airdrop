@@ -39,6 +39,9 @@ export default defineNuxtPlugin(({ nuxt }) => {
                     }
                 });
                 return sortData;
+            },
+            nlToBr(text){
+                return text.replace(/\n/g, '<br />');
             }
         },
     }

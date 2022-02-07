@@ -192,7 +192,7 @@ function addTag(){
     if(usernameList.value == ''){
         return
     }
-    const {data} = useFetch('/api/addTwitterTag', {
+    const {data} = useFetch('/api/twitter/tags/store', {
         method: 'POST',
         body:{
             tag: usernameList.value

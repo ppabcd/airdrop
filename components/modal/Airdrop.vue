@@ -184,7 +184,7 @@ function addMoreInformation(){
                                     </label>
                                     <div class="mt-1 sm:mt-0 sm:col-span-2">
                                         <textarea v-if="isHideType" v-model="description" placeholder="Airdrop Description" rows="4" name="comment" id="form-airdrop-description" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
-                                        <span v-else>{{description}}</span>
+                                        <span v-else v-html="$nlToBr(description)"></span>
                                     </div>
                                 </div>
                                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
